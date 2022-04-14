@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Погода</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="WeatherPrototype.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+</head>
+<body>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <script>
+        let arrayOfDates = new Array();
+        let arrayOfTemps = new Array();
+        function loadData() {
+            idOfCity = window.location.search.replace( '?', ''); 
+            const apiKey = "1d3881e0b2cddf04536dd417319cebf6";
+            const url2 = `https://api.openweathermap.org/data/2.5/forecast?id=${idOfCity}&appid=${apiKey}&units=metric`;
+            fetch(url2)
+                .then(response => response.json())
+                .then(data => {
+                    const { list } = data;
+                    for (var i = 0; i < 40; i++) {
+                        arrayOfDates[i]=list[i].dt_txt;
+                        arrayOfTemps[i]=list[i].main.temp;
+                        console.log(arrayOfDates[i]);
+                }
+                });
+        }
+     idOfCity = window.location.search.replace( '?', ''); 
+     document.addEventListener("DOMContentLoaded", e => {
+            const apiKey = "1d3881e0b2cddf04536dd417319cebf6";
+            const url = `https://api.openweathermap.org/data/2.5/weather?id=${idOfCity}&appid=${apiKey}&units=metric`;     
+
+            console.log('url:', url);
+        fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const { main, name, sys, weather, wind, visibility, coord } = data;
+                    const icon = `https://openweathermap.org/img/wn/${
+                        weather[0]["icon"]
+                    }@2x.png`;
+ 
+                const li = document.createElement("div");
+                li.classList.add("city");
+                const markup = `
+                    <div class="city">
+                    <li>Город: ${name},${sys.country} </li>
+                    <li>Состояние неба: ${weather[0].description}</li>
+                    <li>Температура: ${Math.round(main.temp)}<sup>°C</sup></li>
+                    <li>Скорость ветра: ${wind.speed} м/с </li>
+                    <li>Видимость: ${visibility} м</li>
+                    <li>Давление: ${main.pressure} мм</li>                    
+                    </div>
+                `;
+                li.innerHTML = markup;
+                document.getElementById('cities').appendChild(li);
+
+                loadData();
+                
+                let mapOptions = {
+                  center:[coord.lat, coord.lon],
+                  zoom:5
+                }
+                
+                let map = new L.map('map' , mapOptions);
+
+                let layer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png');
+                map.addLayer(layer);
+
+                let marker = new L.Marker([coord.lat, coord.lon]);
+                marker.addTo(map);
+
+                const labels = arrayOfDates;
+      
+                const chartData = {
+                  labels: labels,
+                  datasets: [{
+                  label: 'Прогноз погоды',
+                  backgroundColor: 'rgb(255, 99, 132)',
+                  borderColor: 'rgb(255, 99, 132)',
+                  data: arrayOfTemps,
+                  }]
+                };
+      
+                const config = {
+                  type: 'line',
+                  data: chartData,
+                  options: {}
+                };
+
+                const myChart = new Chart(
+                document.getElementById('myChart'),
+                config
+                );
+
+              })  
+              myChart.update();              
+        });
+    </script>
+    <canvas id="myChart" width="400" height="100"></canvas>
+  <div id="detailedContainer"></div>
+    <div id="cities"></div>
+    <div id="map"></div>
+</body>
+</html>

@@ -1,0 +1,131 @@
+body {
+    font: 1rem/1.3 "Roboto", sans-serif;
+    background-image: url(https://fullhdoboi.ru/wp-content/uploads/_ph/6/942552018.jpg);
+    color: #1e2432;
+    padding: 50px;
+}
+
+div.city {
+    margin: 10px 20px 30 40px;
+    padding: 10px 20px 30 40px;
+    border: solid 4px;
+    border-color: aquamarine;
+    float: left;
+    background-color: rgba(104, 224, 184, 0.5);;
+    background-repeat: no-repeat;
+    font:700;
+    font-size: 36px;
+    color: red;
+    display:table-cell;
+}
+
+.search button,
+.search input {
+  border: none;
+  background: none;
+  outline: none;
+  color: inherit;
+}
+
+.search input {
+    -webkit-appearance: none;
+}
+
+
+.search{
+    color: black;
+}
+
+.search form {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.search form input {
+    font-size: 2rem;
+    height: 40px;
+    padding: 5px 5px 10px;
+    border-bottom: 1px solid;    
+}
+
+.search form button {
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    padding: 15px 20px; 
+    margin-left: 15px;
+    border-radius: 5px;
+    background: red;
+    transition: background 0.3s ease-in-out;
+}
+
+.search button {
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    padding: 15px 20px; 
+    margin-left: 15px;
+    border-radius: 5px;
+    background: red;
+    transition: background 0.3s ease-in-out;
+    position: relative;
+    float: right;
+    color: black;
+    display: flex;
+}
+
+.city button {
+    font-size: 1rem;
+    font-weight: bold;
+    letter-spacing: 0.1em;
+    padding: 15px 20px; 
+    margin-left: 15px;
+    border-radius: 5px;
+    background: red;
+    transition: background 0.3s ease-in-out;
+    position: relative;
+    float: right;
+    color: black;
+}
+
+#map{
+    height: 300px;
+    width: 1000px;
+    float:left;
+}   
+
+.detailedContainer {
+    display: flex;
+}
+
+.modal-container {
+    background-color: rgba(0, 0, 0, 0.3);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    display:flex;
+    align-items: center;
+    justify-content: center;    
+    opacity: 0;
+    pointer-events: none;
+}
+
+.modal-container.show {
+    pointer-events: auto;
+    opacity: 1;
+}
+div.modal {
+    background-color: #fff;
+    border-radius: 5px;
+    width: 600px;
+    max-width: 100%;
+    padding: 30px 50px;
+    text-align: center;
+}
+
+.checkbox {
+    background-color: black;
+}
